@@ -1,0 +1,37 @@
+body {
+    background-color:#a6511c;
+}
+.btn img {
+    height:45px;
+}
+.btn {
+    background-color:#615750;
+    width:80px;
+    height:55px;
+    outline:0;
+    border:solid #a6511c 1px;
+    border-radius:4px;
+    font-size:2em;
+}
+.btn:active {
+    background-color:blue;
+}
+
+#container {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-template-rows: repeat(5,1fr);
+    grid-gap:5px;
+    width:350px;
+    margin:10% auto;
+}
+#display {
+    position:relative;
+    left:-50%;
+    font-size:2em;
+    top:-45px;
+    border:solid black 4px;
+    border-radius:5px;
+    width:345px;
+    float:right;
+}

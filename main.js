@@ -9,6 +9,7 @@ const numbers = document.querySelectorAll('.num')
 const operators = document.querySelectorAll('.op')
 const clearBtn = document.querySelector('.clr')
 const decimal = document.querySelector('.dot')
+let equation = [];
 let x = ""
 let y = ""
 function operate(operator,x,y) {
@@ -24,39 +25,64 @@ function operate(operator,x,y) {
         }  
 }
     const thing = (obj) => {
-        const op = obj.target.textContent
-        switch(op) {
+        switch(obj.target.textContent) {
             case 'x':
                 action = multiply;
                 x = calcDisplay.textContent;
+                equation.push(x)
+                equation.push('*')
                 calcDisplay.textContent = "0";
-                return console.log('x')
-        }
-        switch(op) {
+                return console.log(equation)
+
             case '/':
                 action = divide;
                 x = calcDisplay.textContent;
                 calcDisplay.textContent = "0";
-                return console.log('/')
-        }
-        switch(op) {
+                equation.push(x)
+                equation.push('/')
+                calcDisplay.textContent = "0";
+                return console.log(equation)
+        
             case '+':
                 action = add;
                 x = calcDisplay.textContent;
                 calcDisplay.textContent = "0";
-                return console.log('+')
-        }
-        switch(op) {
+                equation.push(x)
+                equation.push('+')
+                calcDisplay.textContent = "0";
+                return console.log(equation)
+    
             case '-':
                 action = substract;
                 x = calcDisplay.textContent;
                 calcDisplay.textContent = "0";
-                return console.log('-')
-        }
-        switch(op) {
+                equation.push(x)
+                equation.push('-')
+                calcDisplay.textContent = "0";
+                return console.log(equation)
+
             case '=':
                 y = calcDisplay.textContent;
-                calcDisplay.textContent = operate(action,x,y)
+                equation.push(y);
+
+                firstParameter = equation[0]
+                secondParameter = equation.splice(2,equation.length-1).join('')
+                for (let i = 0; i<secondParameter.split('').length;i++) {
+                    if (secondParameter.split('').length[i] === NaN) {
+                        `${secondParameter.split('')[i-1]}${secondParameter.split('')[i]}${secondParameter.split('')[i+1]}` 
+                    }
+                }
+                switch(equation[1]) {
+                    case "*":
+                        return calcDisplay.textContent = operate(multiply,firstParameter,secondParameter)
+                    case "/":
+                        return calcDisplay.textContent = operate(divide,firstParameter,secondParameter)
+                    case "+":
+                        return calcDisplay.textContent = operate(add,firstParameter,secondParameter)
+                    case "-":
+                        return calcDisplay.textContent = operate(substract,firstParameter,secondParameter)
+                }
+                
                 return console.log('=')
         }
     }
@@ -77,6 +103,8 @@ function operate(operator,x,y) {
 clearBtn.addEventListener('click', () => {
     calcDisplay.textContent = '0';
     x = 0;
+    y = 0;
+    equation = [];
 }) 
 decimal.addEventListener('click', () => {
     if (calcDisplay.textContent.includes('.')) {

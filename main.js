@@ -10,6 +10,7 @@ const operators = document.querySelectorAll('.op')
 const clearBtn = document.querySelector('.clr')
 const decimal = document.querySelector('.dot')
 let equation = [];
+
 let x = ""
 let y = ""
 function operate(operator,x,y) {
@@ -27,64 +28,63 @@ function operate(operator,x,y) {
     const thing = (obj) => {
         switch(obj.target.textContent) {
             case 'x':
-                action = multiply;
                 x = calcDisplay.textContent;
-                equation.push(x)
+                equation.push(Number(x))
                 equation.push('*')
                 calcDisplay.textContent = "0";
                 return console.log(equation)
 
             case '/':
-                action = divide;
                 x = calcDisplay.textContent;
                 calcDisplay.textContent = "0";
-                equation.push(x)
+                equation.push(Number(x))
                 equation.push('/')
                 calcDisplay.textContent = "0";
                 return console.log(equation)
         
             case '+':
-                action = add;
                 x = calcDisplay.textContent;
                 calcDisplay.textContent = "0";
-                equation.push(x)
+                equation.push(Number(x))
                 equation.push('+')
                 calcDisplay.textContent = "0";
                 return console.log(equation)
     
             case '-':
-                action = substract;
                 x = calcDisplay.textContent;
                 calcDisplay.textContent = "0";
-                equation.push(x)
+                equation.push(Number(x))
                 equation.push('-')
                 calcDisplay.textContent = "0";
                 return console.log(equation)
 
             case '=':
                 y = calcDisplay.textContent;
-                equation.push(y);
-
-                firstParameter = equation[0]
-                secondParameter = equation.splice(2,equation.length-1).join('')
-                for (let i = 0; i<secondParameter.split('').length;i++) {
-                    if (secondParameter.split('').length[i] === NaN) {
-                        `${secondParameter.split('')[i-1]}${secondParameter.split('')[i]}${secondParameter.split('')[i+1]}` 
+                equation.push(Number(y));
+                let answer = equation[0]
+                console.log(answer)
+                for (let i = 2; i < equation.length; i += 2) {
+                    switch(equation[i-1]) {
+                        case '+':
+                        answer += equation[i]
+                        break;
+                        case '-':
+                        answer -= equation[i]
+                        break;
+                        case '/':
+                        answer = answer / equation[i]
+                        break;
+                        case '*':
+                        answer = answer * equation[i]
+                        break;
                     }
-                }
-                switch(equation[1]) {
-                    case "*":
-                        return calcDisplay.textContent = operate(multiply,firstParameter,secondParameter)
-                    case "/":
-                        return calcDisplay.textContent = operate(divide,firstParameter,secondParameter)
-                    case "+":
-                        return calcDisplay.textContent = operate(add,firstParameter,secondParameter)
-                    case "-":
-                        return calcDisplay.textContent = operate(substract,firstParameter,secondParameter)
-                }
                 
-                return console.log('=')
+                }
+                answer = parseFloat(answer)
+                calcDisplay.textContent = answer
+                equation = []
         }
+
     }
 
     for (let i = 0; i < numbers.length; i++) {
@@ -111,4 +111,5 @@ decimal.addEventListener('click', () => {
         return;
     } calcDisplay.textContent += '.'
 })
+
 

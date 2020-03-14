@@ -3,10 +3,12 @@ body {
 }
 .btn img {
     height:45px;
+    padding-top:3px;
+    padding-bottom:3px;
 }
 .btn {
     background-color:#615750;
-    width:80px;
+    width:100%;
     height:55px;
     outline:0;
     border:solid #a6511c 1px;
@@ -21,7 +23,7 @@ body {
     display:grid;
     grid-template-columns:repeat(4,1fr);
     grid-template-rows: repeat(5,1fr);
-    grid-gap:5px;
+    grid-gap:4px;
     width:350px;
     margin:10% auto;
 }
@@ -34,4 +36,9 @@ body {
     border-radius:5px;
     width:345px;
     float:right;
+}
+#big0 {
+    width:100%;
+    grid-column-start:1;
+    grid-column-end:3;
 }

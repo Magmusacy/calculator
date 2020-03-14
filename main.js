@@ -1,18 +1,17 @@
-// Even though only addition requires number I replaced all the strings with numbers
-let add = (x,y) => Number(x)+Number(y);
-let substract = (x,y) => Number(x)-Number(y); 
-let multiply = (x,y) => Number(x)*Number(y);
-let divide = (x,y) => Number(x)/Number(y);
+let add = (x,y) => x+y;
+let substract = (x,y) => x-y; 
+let multiply = (x,y) => x*y;
+let divide = (x,y) => x/y;
 const calcDisplay = document.querySelector('#display')
 calcDisplay.textContent = '0';
 const numbers = document.querySelectorAll('.num')
 const operators = document.querySelectorAll('.op')
 const clearBtn = document.querySelector('.clr')
 const decimal = document.querySelector('.dot')
+const backspace = document.querySelector('.bck')
 let equation = [];
-
-let x = ""
-let y = ""
+let x;
+let y;
 function operate(operator,x,y) {
     switch(operator) {
         case add:
@@ -25,8 +24,8 @@ function operate(operator,x,y) {
             return divide(x,y)
         }  
 }
-    const thing = (obj) => {
-        switch(obj.target.textContent) {
+    const fillingArray = (currentOperator) => {
+        switch(currentOperator.target.textContent) {
             case 'x':
                 x = calcDisplay.textContent;
                 equation.push(Number(x))
@@ -59,34 +58,76 @@ function operate(operator,x,y) {
                 return console.log(equation)
 
             case '=':
-                y = calcDisplay.textContent;
-                equation.push(Number(y));
-                let answer = equation[0]
-                console.log(answer)
+        y = calcDisplay.textContent;
+        equation.push(Number(y));
+        let answer = equation[0] 
                 for (let i = 2; i < equation.length; i += 2) {
                     switch(equation[i-1]) {
-                        case '+':
-                        answer += equation[i]
-                        break;
-                        case '-':
-                        answer -= equation[i]
-                        break;
-                        case '/':
-                        answer = answer / equation[i]
-                        break;
-                        case '*':
-                        answer = answer * equation[i]
-                        break;
+                    case '+':
+                        if (equation[i+1] === '+' || equation[i+1] === '-') {
+                            answer += equation[i]
+                        console.log(answer)
+                        } else if (equation[i+1] === '*') {
+                            answer += equation[i] * equation[i+2]
+                        console.log(answer)
+                        } else if (equation[i+1] === '/') {
+                            answer += equation[i] / equation[i+2]
+                        } else {
+                            answer += equation[i]
+                        }
+                    break;
+                    case '-':
+                        if (equation[i+1] === '+' || equation[i+1] === '-') {
+                            answer -= equation[i]
+                        console.log(answer)
+                        } else if (equation[i+1] === '*') {
+                            answer -= equation[i] * equation[i+2]
+                        console.log(answer)
+                        } else if (equation[i+1] === '/') {
+                            answer -= equation[i] / equation[i+2]
+                        } else {
+                            answer -= equation[i]
+                        }
+                    break;
+                    case '/':
+                    if (equation[i] === 0) {
+                        calcDisplay.textContent = 'Fc'
+                    } else {
+                        if (equation[i-3] === '+' || equation[i-3] === '-') {
+                        console.log(answer)
+                            answer = answer
+                        } else if (equation[i-3] === '*') {
+                            answer = answer / equation[i]
+                        console.log(answer)
+                        } else if (equation[i-3] === '/') {
+                            answer = answer / equation[i]
+                        console.log(answer)
+                        } else {
+                            answer = answer / equation[i]
+                        }
                     }
-                
+                    break;
+                    case '*':
+                        if (equation[i-3] === '+' || equation[i-3] === '-') {
+                        console.log(answer)
+                            answer = answer
+                        } else if (equation[i-3] === '*') {
+                            answer = answer * equation[i]
+                        console.log(answer)
+                        } else if (equation[i-3] === '/') {
+                            answer = answer * equation[i]
+                        console.log(answer)
+                        } else {
+                            answer = answer * equation[i]
+                        }
+                    break;
+                    }
                 }
-                answer = parseFloat(answer)
-                calcDisplay.textContent = answer
-                equation = []
+        answer = parseFloat(answer).toFixed(2)
+        calcDisplay.textContent = answer
+        equation = []
         }
-
     }
-
     for (let i = 0; i < numbers.length; i++) {
         numbers[i].addEventListener('click', (e) => {
             if (calcDisplay.textContent === '0') {
@@ -95,9 +136,8 @@ function operate(operator,x,y) {
             calcDisplay.textContent += e.target.textContent
         })
     }
-
     for (let i = 0; i < operators.length; i++) {
-       operators[i].addEventListener('click', thing)
+       operators[i].addEventListener('click', fillingArray)
 }
 
 clearBtn.addEventListener('click', () => {
@@ -105,11 +145,18 @@ clearBtn.addEventListener('click', () => {
     x = 0;
     y = 0;
     equation = [];
+    answer = 0;
 }) 
 decimal.addEventListener('click', () => {
     if (calcDisplay.textContent.includes('.')) {
         return;
     } calcDisplay.textContent += '.'
+})
+backspace.addEventListener('click', () => {
+    calcDisplay.textContent = calcDisplay.textContent.slice(0,calcDisplay.textContent.length-1)
+    if (calcDisplay.textContent === "") {
+        calcDisplay.textContent = 0;
+    }
 })
 
 

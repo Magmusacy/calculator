@@ -123,7 +123,7 @@ function operate(operator,x,y) {
                     break;
                     }
                 } 
-        answer = parseFloat(answer).toFixed(2)
+        answer = +parseFloat(answer).toFixed(2)
     if (answer === 'Infinity' || answer === '-Infinity') {
         answer = "Don't divide by 0!!!"
     }

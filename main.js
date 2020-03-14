@@ -1,7 +1,9 @@
+//unnecessary
 let add = (x,y) => x+y;
 let substract = (x,y) => x-y; 
 let multiply = (x,y) => x*y;
 let divide = (x,y) => x/y;
+//---
 const calcDisplay = document.querySelector('#display')
 calcDisplay.textContent = '0';
 const numbers = document.querySelectorAll('.num')
@@ -12,6 +14,7 @@ const backspace = document.querySelector('.bck')
 let equation = [];
 let x;
 let y;
+//unnecessary
 function operate(operator,x,y) {
     switch(operator) {
         case add:
@@ -24,6 +27,7 @@ function operate(operator,x,y) {
             return divide(x,y)
         }  
 }
+//---
     const fillingArray = (currentOperator) => {
         switch(currentOperator.target.textContent) {
             case 'x':
@@ -90,9 +94,6 @@ function operate(operator,x,y) {
                         }
                     break;
                     case '/':
-                    if (equation[i] === 0) {
-                        calcDisplay.textContent = 'Fc'
-                    } else {
                         if (equation[i-3] === '+' || equation[i-3] === '-') {
                         console.log(answer)
                             answer = answer
@@ -105,7 +106,6 @@ function operate(operator,x,y) {
                         } else {
                             answer = answer / equation[i]
                         }
-                    }
                     break;
                     case '*':
                         if (equation[i-3] === '+' || equation[i-3] === '-') {
@@ -122,8 +122,11 @@ function operate(operator,x,y) {
                         }
                     break;
                     }
-                }
+                } 
         answer = parseFloat(answer).toFixed(2)
+    if (answer === 'Infinity' || answer === '-Infinity') {
+        answer = "Don't divide by 0!!!"
+    }
         calcDisplay.textContent = answer
         equation = []
         }

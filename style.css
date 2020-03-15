@@ -1,5 +1,12 @@
-body {
+@font-face {
+    src: url(DIGITALDREAMNARROW.ttf);
+    font-family:digital
+}
+html body {
     background-color:#a6511c;
+}
+body button {
+    font-family:digital;
 }
 .btn img {
     height:45px;
@@ -31,14 +38,24 @@ body {
     position:relative;
     left:-50%;
     font-size:2em;
-    top:-45px;
+    top:-50px;
     border:solid black 4px;
     border-radius:5px;
-    width:345px;
-    float:right;
+    width:21ch;
+    max-width:21ch;
+    text-align:right;
+    padding:4px;
+    overflow:hidden;
+    font-family:digital;
+    font-size:27px;
 }
 #big0 {
     width:100%;
+    grid-column-start:1;
+    grid-column-end:3;
+}
+.clr {
+    widows: 100%;
     grid-column-start:1;
     grid-column-end:3;
 }

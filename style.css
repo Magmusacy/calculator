@@ -3,7 +3,7 @@
     font-family:digital
 }
 html body {
-    background-color:#a6511c;
+    background-color:#9e702f;
 }
 body button {
     font-family:digital;
@@ -18,12 +18,25 @@ body button {
     width:100%;
     height:55px;
     outline:0;
-    border:solid #a6511c 1px;
+    border:solid #9e702f 1px;
     border-radius:4px;
     font-size:2em;
+    background-color:white;
+}
+.color {
+    background-color:#e173eb;
+}
+.color:active {
+    background-color:#8911f2;
+}
+.op {
+    background-color:#8911f2;
+}
+.op:active {
+    background-color:#e173eb;
 }
 .btn:active {
-    background-color:blue;
+    transform: scale(1.08);
 }
 
 #container {
@@ -32,22 +45,21 @@ body button {
     grid-template-rows: repeat(5,1fr);
     grid-gap:4px;
     width:350px;
-    margin:10% auto;
+    margin:12.5% auto;
 }
 #display {
     position:relative;
     left:-50%;
-    font-size:2em;
-    top:-50px;
-    border:solid black 4px;
+    top:-42px;
+    border:solid black 0px;
     border-radius:5px;
     width:21ch;
-    max-width:21ch;
     text-align:right;
     padding:4px;
     overflow:hidden;
     font-family:digital;
     font-size:27px;
+    background-color:white;
 }
 #big0 {
     width:100%;

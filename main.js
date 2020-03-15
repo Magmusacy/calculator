@@ -35,14 +35,16 @@ function operate(operator,x,y) {
                 equation.push(Number(x))
                 equation.push('*')
                 calcDisplay.textContent = "0";
+                preventOverflow()
                 return console.log(equation)
 
-            case '/':
+            case '÷':
                 x = calcDisplay.textContent;
                 calcDisplay.textContent = "0";
                 equation.push(Number(x))
-                equation.push('/')
+                equation.push('÷')
                 calcDisplay.textContent = "0";
+                preventOverflow()
                 return console.log(equation)
         
             case '+':
@@ -51,6 +53,7 @@ function operate(operator,x,y) {
                 equation.push(Number(x))
                 equation.push('+')
                 calcDisplay.textContent = "0";
+                preventOverflow()
                 return console.log(equation)
     
             case '-':
@@ -59,6 +62,7 @@ function operate(operator,x,y) {
                 equation.push(Number(x))
                 equation.push('-')
                 calcDisplay.textContent = "0";
+                preventOverflow()
                 return console.log(equation)
 
             case '=':
@@ -74,7 +78,7 @@ function operate(operator,x,y) {
                         } else if (equation[i+1] === '*') {
                             answer += equation[i] * equation[i+2]
                         console.log(answer)
-                        } else if (equation[i+1] === '/') {
+                        } else if (equation[i+1] === '÷') {
                             answer += equation[i] / equation[i+2]
                         } else {
                             answer += equation[i]
@@ -87,20 +91,20 @@ function operate(operator,x,y) {
                         } else if (equation[i+1] === '*') {
                             answer -= equation[i] * equation[i+2]
                         console.log(answer)
-                        } else if (equation[i+1] === '/') {
+                        } else if (equation[i+1] === '÷') {
                             answer -= equation[i] / equation[i+2]
                         } else {
                             answer -= equation[i]
                         }
                     break;
-                    case '/':
+                    case '÷':
                         if (equation[i-3] === '+' || equation[i-3] === '-') {
                         console.log(answer)
                             answer = answer
                         } else if (equation[i-3] === '*') {
                             answer = answer / equation[i]
                         console.log(answer)
-                        } else if (equation[i-3] === '/') {
+                        } else if (equation[i-3] === '÷') {
                             answer = answer / equation[i]
                         console.log(answer)
                         } else {
@@ -114,7 +118,7 @@ function operate(operator,x,y) {
                         } else if (equation[i-3] === '*') {
                             answer = answer * equation[i]
                         console.log(answer)
-                        } else if (equation[i-3] === '/') {
+                        } else if (equation[i-3] === '÷') {
                             answer = answer * equation[i]
                         console.log(answer)
                         } else {
@@ -124,7 +128,7 @@ function operate(operator,x,y) {
                     }
                 } 
         answer = +parseFloat(answer).toFixed(2)
-    if (answer === 'Infinity' || answer === '-Infinity') {
+    if (answer === Infinity || answer === -Infinity) {
         answer = "Don't divide by 0!!!"
     }
         calcDisplay.textContent = answer
@@ -137,6 +141,7 @@ function operate(operator,x,y) {
                 calcDisplay.textContent = ""
             }
             calcDisplay.textContent += e.target.textContent
+            preventOverflow()
         })
     }
     for (let i = 0; i < operators.length; i++) {
@@ -154,6 +159,7 @@ decimal.addEventListener('click', () => {
     if (calcDisplay.textContent.includes('.')) {
         return;
     } calcDisplay.textContent += '.'
+    
 })
 backspace.addEventListener('click', () => {
     calcDisplay.textContent = calcDisplay.textContent.slice(0,calcDisplay.textContent.length-1)
@@ -162,4 +168,17 @@ backspace.addEventListener('click', () => {
     }
 })
 
+function preventOverflow() {
+    if (calcDisplay.textContent.length > 20) {
+        numbers.forEach((number) => {
+            number.disabled = true;
+            decimal.disabled = true;
+        })
+    } else {
+        numbers.forEach((number) => {
+            number.disabled = false;
+            decimal.disabled = false;
+        })
+    }
+}
 

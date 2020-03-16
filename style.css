@@ -45,7 +45,9 @@ body button {
     grid-template-rows: repeat(5,1fr);
     grid-gap:4px;
     width:350px;
-    margin:12.5% auto;
+    height:100%;
+    margin:0 auto;
+    margin-top:12.5%;
 }
 #display {
     position:relative;
@@ -70,4 +72,12 @@ body button {
     widows: 100%;
     grid-column-start:1;
     grid-column-end:3;
+}
+#precision p {
+    position:relative;
+    top:20px;
+    text-align:center;
+    font-weight: bold;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
 }

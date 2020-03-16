@@ -31,7 +31,7 @@ function operate(operator,x,y) {
     const fillingArray = (currentOperator) => {
         switch(currentOperator.target.textContent) {
             case 'x':
-                x = calcDisplay.textContent;
+                x = BigInt(calcDisplay.textContent);
                 equation.push(Number(x))
                 equation.push('*')
                 calcDisplay.textContent = "0";
@@ -127,9 +127,10 @@ function operate(operator,x,y) {
                     break;
                     }
                 } 
+                console.log(answer)
         answer = +parseFloat(answer).toFixed(2)
     if (answer === Infinity || answer === -Infinity) {
-        answer = "Don't divide by 0!!!"
+        answer = "ERROR!"
     }
         calcDisplay.textContent = answer
         equation = []
@@ -169,7 +170,7 @@ backspace.addEventListener('click', () => {
 })
 
 function preventOverflow() {
-    if (calcDisplay.textContent.length > 20) {
+    if (calcDisplay.textContent.length > 15) {
         numbers.forEach((number) => {
             number.disabled = true;
             decimal.disabled = true;

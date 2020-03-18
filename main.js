@@ -4,6 +4,7 @@ let substract = (x,y) => x-y;
 let multiply = (x,y) => x*y;
 let divide = (x,y) => x/y;
 //---
+const buttons = document.querySelectorAll('.btn')
 const calcDisplay = document.querySelector('#display')
 calcDisplay.textContent = '0';
 const numbers = document.querySelectorAll('.num')
@@ -29,7 +30,8 @@ function operate(operator,x,y) {
 }
 //---
     const fillingArray = (currentOperator) => {
-        switch(currentOperator.target.textContent) {
+        console.log(currentOperator)
+        switch(currentOperator.textContent) {
             case 'x':
                 x = BigInt(calcDisplay.textContent);
                 equation.push(Number(x))
@@ -136,6 +138,7 @@ function operate(operator,x,y) {
         equation = []
         }
     }
+    // filling the display with numbers
     for (let i = 0; i < numbers.length; i++) {
         numbers[i].addEventListener('click', (e) => {
             if (calcDisplay.textContent === '0') {
@@ -145,9 +148,32 @@ function operate(operator,x,y) {
             preventOverflow()
         })
     }
-    for (let i = 0; i < operators.length; i++) {
-       operators[i].addEventListener('click', fillingArray)
-}
+    document.addEventListener('keypress',(e) => {
+        console.log(e.key)
+        const operatorPressed = Array.from(operators)
+        const operatord = operatorPressed.find(chuj => chuj.value == `${e.key}`)
+        if (operatord !== undefined) {
+            console.log(operatord)
+            fillingArray(operatord)
+        }
+        const number = Array.from(numbers)
+        const clickedNum = number.find(num => num.textContent == `${e.key}`)
+        if (clickedNum === undefined) {
+            return;
+        } else if (clickedNum !== undefined) {
+           if (calcDisplay.textContent === '0') {
+                calcDisplay.textContent = ""
+           }
+        }
+        calcDisplay.textContent += clickedNum.textContent
+        preventOverflow()
+        console.log(clickedNum)
+
+    })
+    operators.forEach(operator => operator.addEventListener('click', (operator) => {
+        const operatorTarget = operator.target
+        fillingArray(operatorTarget)
+    }))
 
 clearBtn.addEventListener('click', () => {
     calcDisplay.textContent = '0';
@@ -155,31 +181,26 @@ clearBtn.addEventListener('click', () => {
     y = 0;
     equation = [];
     answer = 0;
+    preventOverflow()
 }) 
+
+
 decimal.addEventListener('click', () => {
     if (calcDisplay.textContent.includes('.')) {
         return;
     } calcDisplay.textContent += '.'
-    
 })
 backspace.addEventListener('click', () => {
     calcDisplay.textContent = calcDisplay.textContent.slice(0,calcDisplay.textContent.length-1)
+    preventOverflow()
     if (calcDisplay.textContent === "") {
         calcDisplay.textContent = 0;
     }
 })
 
 function preventOverflow() {
-    if (calcDisplay.textContent.length > 15) {
-        numbers.forEach((number) => {
-            number.disabled = true;
-            decimal.disabled = true;
-        })
-    } else {
-        numbers.forEach((number) => {
-            number.disabled = false;
-            decimal.disabled = false;
-        })
+    if (calcDisplay.textContent.length > 16) {
+            calcDisplay.textContent = 0;
+            preventOverflow()
     }
 }
-

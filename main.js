@@ -33,7 +33,7 @@ function operate(operator,x,y) {
         console.log(currentOperator)
         switch(currentOperator.textContent) {
             case 'x':
-                x = BigInt(calcDisplay.textContent);
+                x = calcDisplay.textContent;
                 equation.push(Number(x))
                 equation.push('*')
                 calcDisplay.textContent = "0";
@@ -148,8 +148,21 @@ function operate(operator,x,y) {
             preventOverflow()
         })
     }
-    document.addEventListener('keypress',(e) => {
+    // keyboard support below
+    document.addEventListener('keydown',(e) => {
         console.log(e.key)
+        if (e.key === 'Backspace') {
+            calcDisplay.textContent = calcDisplay.textContent.slice(0,calcDisplay.textContent.length-1)
+        preventOverflow()
+            if (calcDisplay.textContent === "") {
+        calcDisplay.textContent = 0;
+    }
+        }
+        if (e.key === ".") {
+                if (calcDisplay.textContent.includes('.')) {
+                    return;
+                } calcDisplay.textContent += '.'
+        }
         const operatorPressed = Array.from(operators)
         const operatord = operatorPressed.find(chuj => chuj.value == `${e.key}`)
         if (operatord !== undefined) {
@@ -183,8 +196,6 @@ clearBtn.addEventListener('click', () => {
     answer = 0;
     preventOverflow()
 }) 
-
-
 decimal.addEventListener('click', () => {
     if (calcDisplay.textContent.includes('.')) {
         return;

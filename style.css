@@ -7,7 +7,7 @@ html body {
 }
 body button {
     font-family:digital;
-    transition: all 0.10s;
+    transition: all 0.15s;
 }
 .btn img {
     height:45px;
@@ -39,7 +39,14 @@ body button {
 .btn:active {
     transform: scale(1.08);
 }
-
+.activeop {
+    transform: scale(1.08);
+    background-color:#e173eb;
+}
+.activecolor {
+    transform: scale(1.08);
+    background-color:#8911f2;
+}
 #container {
     display:grid;
     grid-template-columns:repeat(4,1fr);

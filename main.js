@@ -162,13 +162,16 @@ function operate(operator,x,y) {
                 if (calcDisplay.textContent.includes('.')) {
                     return;
                 } calcDisplay.textContent += '.'
+                decimal.classList.add('activecolor')
         }
         const operatorPressed = Array.from(operators)
         const operatord = operatorPressed.find(chuj => chuj.value == `${e.key}`)
         if (operatord !== undefined) {
+            operatord.classList.add('activeop');
             console.log(operatord)
             fillingArray(operatord)
         }
+            operators.forEach(op => op.addEventListener('transitionend', removeTransitionOp))
         const number = Array.from(numbers)
         const clickedNum = number.find(num => num.textContent == `${e.key}`)
         if (clickedNum === undefined) {
@@ -178,10 +181,11 @@ function operate(operator,x,y) {
                 calcDisplay.textContent = ""
            }
         }
+        clickedNum.classList.add('activecolor')
         calcDisplay.textContent += clickedNum.textContent
         preventOverflow()
         console.log(clickedNum)
-
+            numbers.forEach(num => num.addEventListener('transitionend', removeTransitionNum))
     })
     operators.forEach(operator => operator.addEventListener('click', (operator) => {
         const operatorTarget = operator.target
@@ -196,6 +200,7 @@ clearBtn.addEventListener('click', () => {
     answer = 0;
     preventOverflow()
 }) 
+decimal.addEventListener('transitionend', removeTransitionNum)
 decimal.addEventListener('click', () => {
     if (calcDisplay.textContent.includes('.')) {
         return;
@@ -214,4 +219,12 @@ function preventOverflow() {
             calcDisplay.textContent = 0;
             preventOverflow()
     }
+}
+function removeTransitionOp(e) {
+    if (e.propertyName !== "transform") return;
+    this.classList.remove('activeop')
+}
+function removeTransitionNum(e) {
+    if (e.propertyName !== "transform") return;
+    this.classList.remove('activecolor')
 }

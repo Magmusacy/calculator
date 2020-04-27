@@ -6,7 +6,7 @@ const operators = document.querySelectorAll(".op");
 const clearBtn = document.querySelector(".clr");
 const decimal = document.querySelector(".dot");
 const backspace = document.querySelector(".bck");
-const equation = [];
+let equation = [];
 let x;
 let y;
 const operations = {
@@ -15,7 +15,7 @@ const operations = {
   "*": (a, b) => a * b,
   "/": (a, b) => a / b,
 };
-function currentOperatorAdd(operatorSign) {
+const currentOperatorAdd = operatorSign => {
   if (operatorSign.value !== "=") {
     x = calcDisplay.textContent;
     equation.push(+x);
@@ -35,49 +35,42 @@ function currentOperatorAdd(operatorSign) {
     }
     calcDisplay.textContent = "0";
     preventOverflow();
-    return console.log(equation);
   }
 }
-function evaluateArray(array) {
+const evaluateArray = array => {
   for (let i = 1; i < array.length; i += 2) {
     if (
-      (array[i] === operations["+"] || array[i] === operations["-"]) &&
-      (array[i + 2] === operations["+"] ||
-        array[i + 2] === operations["-"] ||
-        array[i + 2] === undefined)
+            (array[i] === operations["+"] || array[i] === operations["-"]) &&
+            (array[i + 2] === operations["+"] ||
+            array[i + 2] === operations["-"] ||
+            array[i + 2] === undefined)
     ) {
-      array.splice(i - 1, 3, +`${array[i](array[i - 1], array[i + 1])}`); // evaluate [number,operator,number] and splice the array
+          array.splice(i - 1, 3, +`${array[i](array[i - 1], array[i + 1])}`); // evaluate [number,operator,number] and splice the array
     }
     else if (
-      (array[i] === operations["+"] || array[i] === operations["-"]) &&
-      (array[i + 2] === operations["/"] || array[i + 2] === operations["*"])
+          (array[i] === operations["+"] || array[i] === operations["-"]) && // check for current operator
+          (array[i + 2] === operations["/"] || array[i + 2] === operations["*"]) // check for next operator
     ) {
-      console.log(equation)
-      array.splice(i + 1, 3, +`${array[i + 2](array[i + 1], array[i + 3])}`);
-      console.log(equation)
+          array.splice(i + 1, 3, +`${array[i + 2](array[i + 1], array[i + 3])}`); // evaluate [number,operator,number] and splice the array
     } else {
-      array.splice(i - 1, 3, +`${array[i](array[i - 1], array[i + 1])}`);
+          array.splice(i - 1, 3, +`${array[i](array[i - 1], array[i + 1])}`); // evaluate [number,operator,number] and splice the array
     }
   }
 }
 const fillingArray = (currentOperator) => {
-  console.log(currentOperator);
-  currentOperatorAdd(currentOperator);
-  if (currentOperator.value === "=") {
-    y = calcDisplay.textContent;
-    equation.push(+y);
-    console.log(equation);
-    x = 0;
-    y = 0;
-    while (equation.length > 1) {
-      evaluateArray(equation);
-    }
-    console.log(equation);
-    calcDisplay.textContent = equation[0];
-    x = equation[0];
-    equation.pop();
-    console.log(equation);
-  }
+      currentOperatorAdd(currentOperator);
+      if (currentOperator.value === "=") {
+        y = calcDisplay.textContent;
+        equation.push(+y);
+        x = 0;
+        y = 0;
+        while (equation.length > 1) {
+          evaluateArray(equation);
+        }
+        calcDisplay.textContent = equation[0];
+        x = equation[0];
+        equation.pop();
+      }
 };
 
 // filling the display with numbers

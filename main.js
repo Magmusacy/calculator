@@ -35,6 +35,7 @@ const currentOperatorAdd = operatorSign => {
     }
     calcDisplay.textContent = "0";
     preventOverflow();
+    console.log(equation);
   }
 }
 const evaluateArray = array => {
@@ -51,8 +52,10 @@ const evaluateArray = array => {
           (array[i] === operations["+"] || array[i] === operations["-"]) && // check for current operator
           (array[i + 2] === operations["/"] || array[i + 2] === operations["*"]) // check for next operator
     ) {
+          console.log(equation)
           array.splice(i + 1, 3, +`${array[i + 2](array[i + 1], array[i + 3])}`); // evaluate [number,operator,number] and splice the array
-    } else {
+          console.log(equation)
+        } else {
           array.splice(i - 1, 3, +`${array[i](array[i - 1], array[i + 1])}`); // evaluate [number,operator,number] and splice the array
     }
   }
@@ -62,14 +65,17 @@ const fillingArray = (currentOperator) => {
       if (currentOperator.value === "=") {
         y = calcDisplay.textContent;
         equation.push(+y);
+        console.log(equation)
         x = 0;
         y = 0;
         while (equation.length > 1) {
           evaluateArray(equation);
         }
+        console.log(equation)
         calcDisplay.textContent = equation[0];
         x = equation[0];
         equation.pop();
+        console.log(equation)
       }
 };
 
